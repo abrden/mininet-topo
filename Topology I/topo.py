@@ -11,7 +11,7 @@ class MyTopo(Topo):
 	def __init__ (self, hosts, levels):
 		# setLogLevel('debug')
 		self.my_hosts_number = hosts
-		self.my_switches_number = int(get_switch_amount(levels))
+		self.my_switches_number = get_switch_amount(levels)
 		self.my_hosts = []
 		self.my_switches = []
 		print self.my_hosts_number
