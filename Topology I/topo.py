@@ -1,13 +1,10 @@
+import sys
+sys.path.append(".")
+
 from mininet.topo import Topo
+from switch import get_switch_amount
 from mininet.log import setLogLevel 
 import math
-
-def get_switch_amount(switch_level):
-	sum = math.pow(2, switch_level - 1)
-	while (0 < switch_level - 1):
-		sum += math.pow(2, switch_level - 1)
-		switch_level -= 1
-	return sum
 
 class MyTopo(Topo):
 
@@ -15,7 +12,7 @@ class MyTopo(Topo):
 		# setLogLevel('debug')
 		self.levels = levels
 		self.my_hosts_number = hosts
-		self.my_switches_number = int(get_switch_amount(self.levels))
+		self.my_switches_number = get_switch_amount(self.levels)
 		self.my_hosts = []
 		self.my_switches = []
 		print self.my_hosts_number
