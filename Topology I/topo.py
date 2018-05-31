@@ -1,11 +1,18 @@
 from mininet.topo import Topo
 import math
 
+def get_switch_amount(switch_level):
+	sum = math.pow(2, switch_level - 1)
+	while (0 < switch_level - 1):
+		sum += math.pow(2, switch_level - 1)
+		switch_level -= 1
+	return sum
+
 class MyTopo(Topo):
 
 	def __init__ (self, hosts, levels):
 		self.hosts_number = hosts
-		self.switches_number = self._get_switch_amount(levels)
+		self.switches_number = get_switch_amount(levels)
 		self.hosts = []
 		self.switches = []
 		print hosts
@@ -23,12 +30,6 @@ class MyTopo(Topo):
 		self.addLink(s2, h3)
 		self.addLink(s2, h4)
 
-	def _get_switch_amount(self, switch_level):
-		if switch_level == 1:
-			return 1
-		else:
-			return math.pow(2, switch_level - 1) + 2 * self._get_switch_amount(switch_level - 1)
-
 	def create_hosts(self):
 		hname = 'host_'
 		for i in xrange(self.hosts_number):
@@ -40,6 +41,6 @@ class MyTopo(Topo):
 			self.switches.append(self.addSwitch(swname + i))
 
 	def create_links(self):
-
+		return
 
 topos = { 'customTopo': MyTopo }
