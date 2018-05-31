@@ -15,25 +15,15 @@ class MyTopo(Topo):
 		self.my_switches_number = get_switch_amount(self.levels)
 		self.my_hosts = []
 		self.my_switches = []
-		print self.my_hosts_number
-		print self.my_switches_number
 
 		# Initialize topology
 		Topo.__init__(self)
 		# Create switch
-		# s1 = self.addSwitch('switch_1')
 		self.create_switches()
 		# Create hosts
-		# h1 = self.addHost('host_1')
-		# h2 = self.addHost('host_2')
 		self.create_hosts()
 		# Add links between switches and hosts
 		self.create_links()
-		# self.addLink(s1, s2)
-		# self.addLink(s1, h1)
-		# self.addLink(s1, h2)
-		# self.addLink(s2, h3)
-		# self.addLink(s2, h4)
 
 	def create_hosts(self):
 		hname = 'host_'
@@ -57,57 +47,15 @@ class MyTopo(Topo):
 		# Switch linking
 		self._link_switches(self.levels, 0, 0)
 
-	def _link_switches(self, level, root, child):
+	def _link_switches(self, level, root_offset, child_offset):
 		if level == 1:
 			return
-		self.addLink(self.my_switches[0 + root], self.my_switches[1 + child])
-		self.addLink(self.my_switches[0 + root], self.my_switches[2 + child])
+		self.addLink(self.my_switches[0 + root_offset], self.my_switches[1 + child_offset])
+		self.addLink(self.my_switches[0 + root_offset], self.my_switches[2 + child_offset])
 		for i in xrange(1, level):
-			self._link_switches(level - 1, i, child + i * 2)
-		self.addLink(self.my_switches[-1 - root], self.my_switches[-2 - child])
-		self.addLink(self.my_switches[-1 - root], self.my_switches[-3 - child])
-
-	
-	
-	
-	
-	
-	# def _link_switches2(self, s0, s1, s2):
-	# 	if s0 > self.my_switches_number:
-	# 		return
-	# 	self.addLink(self.my_switches[s0], self.my_switches[s1])
-	# 	self.addLink(self.my_switches[s0], self.my_switches[s2])
-
-	# 	_link_switches(s1, s2 + 1, s2 + 2)
-	# 	_link_switches(s2, s2 + 3, s2 + 4)
-
-	# 	# Nivel 2
-	# 	self.addLink(self.my_switches[0], self.my_switches[1])
-	# 	self.addLink(self.my_switches[0], self.my_switches[2])
-
-	# 	self.addLink(self.my_switches[1], self.my_switches[3])
-	# 	self.addLink(self.my_switches[2], self.my_switches[3])		
-		
-	# 	# Nivel 3
-	# 	self.addLink(self.my_switches[0], self.my_switches[1])
-	# 	self.addLink(self.my_switches[0], self.my_switches[2])
-
-	# 	self.addLink(self.my_switches[1], self.my_switches[3])	
-	# 	self.addLink(self.my_switches[1], self.my_switches[4])
-		
-	# 	self.addLink(self.my_switches[2], self.my_switches[5])	
-	# 	self.addLink(self.my_switches[2], self.my_switches[6])
-
-	# 	self.addLink(self.my_switches[3], self.my_switches[7])	
-	# 	self.addLink(self.my_switches[4], self.my_switches[7])
-
-	# 	self.addLink(self.my_switches[5], self.my_switches[8])	
-	# 	self.addLink(self.my_switches[6], self.my_switches[8])
-
-	# 	self.addLink(self.my_switches[7], self.my_switches[9])	
-	# 	self.addLink(self.my_switches[8], self.my_switches[9])
-			
-
+			self._link_switches(level - 1, i, child_offset + i * 2)
+		self.addLink(self.my_switches[-1 - root_offset], self.my_switches[-2 - child_offset])
+		self.addLink(self.my_switches[-1 - root_offset], self.my_switches[-3 - child_offset])			
 
 
 topos = { 'customTopo': MyTopo }
