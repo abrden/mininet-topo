@@ -26,12 +26,12 @@ class MyTopo(Topo):
 		self.create_links()
 
 	def create_hosts(self):
-		hname = 'host_'
+		hname = 'h'
 		for i in xrange(self.my_hosts_number):
 			self.my_hosts.append(self.addHost(hname + str(i)))
 
 	def create_switches(self):
-		swname = 'switch_'
+		swname = 's'
 		for i in xrange(self.my_switches_number):
 			self.my_switches.append(self.addSwitch(swname + str(i)))
 
@@ -44,7 +44,7 @@ class MyTopo(Topo):
 			else:
 				self.addLink(self.my_switches[-1], host)
 
-		# Switch linking
+		# Switchs linking
 		self._link_switches(self.levels, 0, 0)
 
 	def _link_switches(self, level, root_offset, child_offset):
