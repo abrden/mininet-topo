@@ -14,8 +14,9 @@ from pox.lib.addresses import EthAddr
 from collections import namedtuple
 import os
 ''' Add your imports here ... '''
+import pox.lib.packet as pkt
 
-log = core . getLogger ()
+log = core.getLogger ()
 
 ''' Add your global variables here ... '''
 rules = [['00:00:00:00:00:01', '00:00:00:00:00:03']]
@@ -34,7 +35,14 @@ class Firewall(EventMixin):
 			flow_mod = of.ofp_flow_mod()
 			flow_mod.match = block
 			event.connection.send(flow_mod)
-		
+
+	def _handle_PacketIn (self, event):
+		packet = event.parsed
+		if packet.type == packet.ARP_TYPE:
+			log.debug(packet)
+			log.debug('Blocked!')
+			event.halt = True
+
 def launch():
 	'''
 	Starting the Firewall module
