@@ -16,7 +16,9 @@ import os
 ''' Add your imports here ... '''
 
 log = core . getLogger ()
+
 ''' Add your global variables here ... '''
+rules = [['00:00:00:00:00:01', '00:00:00:00:00:03']]
 
 class Firewall(EventMixin):
 
@@ -25,10 +27,16 @@ class Firewall(EventMixin):
 		log.debug("Enabling Firewall Module")
 		
 	def _handle_ConnectionUp(self, event):
-		''' Add your logic here ... '''
+		for rule in rules:
+			block = of.ofp_match()
+			block.dl_src = EthAddr(rule[0])
+			block.dl_dst = EthAddr(rule[1])
+			flow_mod = of.ofp_flow_mod()
+			flow_mod.match = block
+			event.connection.send(flow_mod)
 		
-	def launch():
-		'''
-		Starting the Firewall module
-		'''
-		core.registerNew(Firewall)
+def launch():
+	'''
+	Starting the Firewall module
+	'''
+	core.registerNew(Firewall)
