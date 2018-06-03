@@ -37,6 +37,7 @@ class Firewall(EventMixin):
 			event.connection.send(flow_mod)
 
 	def _handle_PacketIn (self, event):
+		#log.debug(event.parsed)
 		packet = event.parsed.find('ipv4')
 		if not packet: return
 		
