@@ -4,7 +4,7 @@
 sudo cp firewall.py pox/pox/samples/firewall_impl.py
 
 # Run pox in another pid. Using our firewall impl
-./pox/pox.py samples.firewall_impl &
+./pox/pox.py samples.firewall_impl forwarding.l2_learning &
 
 # We notify the user what we will do
 echo "About to run mininet with $1 switches"
