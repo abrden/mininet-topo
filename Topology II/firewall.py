@@ -37,23 +37,16 @@ class Firewall(EventMixin):
 			event.connection.send(flow_mod)
 
 	def _handle_PacketIn (self, event):
-		#log.debug(event.parsed)
 		packet = event.parsed.find('ipv4')
 		if not packet: return
-		log.debug('other comment')
 		if packet.protocol != pkt.ipv4.ICMP_PROTOCOL and packet.payload.dstport == 80:
 			log.debug(packet)
 			log.debug('Blocked ICMP packet with destinationPort = 80!')
 			event.halt = True
-		elif packet.protocol == pkt.ipv4.UDP_PROTOCOL and packet.payload.dstport == 5001:
-			log.debug(packet)
-			#log.debug('Blocked UDP packet with destinationPort = 5001!')
-			#event.halt = True
-		
+		elif packet.protocol == pkt.ipv4.UDP_PROTOCOL and packet.payload.dstport == 5001:		
 			eth_packet = event.parsed
 			host_1 = '00:00:00:00:00:02'
 			addr = EthAddr(host_1)
-			log.debug('testing')
 			if eth_packet.src == addr:
 				log.debug(packet)
 				log.debug('Blocked udp datagram with destination port of 5001 coming from host 1!')
