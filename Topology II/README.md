@@ -32,8 +32,10 @@ mininet> h3 wget -O - h0
 
 ```
 mininet> xterm h1 h2
+# Check H1 IP
+mininet Node h1> ifconfig
 # Server / UDP / Interval for bandwith 1 / Port
 mininet Node h1> iperf -s -u -i 1 -p 5001
 # Client / UDP / Bandwidth / Number of bytes to transport / Port
-mininet Node h2> iperf -c 10.0.0.1 -u -b 1m -n 1000 -p 5001
+mininet Node h2> iperf -c {H1 IP} -u -b 1M -n 1000 -p 5001
 ```
