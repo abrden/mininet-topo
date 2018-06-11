@@ -1,11 +1,3 @@
-'''
-Coursera :
-- Software Defined Networking ( SDN ) course
--- Programming Assignment : Layer -2 Firewall Application
-Professor : Nick Feamster
-Teaching Assistant : Arpit Gupta
-'''
-
 from pox.core import core
 import pox.openflow.libopenflow_01 as of
 from pox.lib.revent import *
@@ -41,7 +33,7 @@ class Firewall(EventMixin):
 		if not packet: return
 		if packet.protocol != pkt.ipv4.ICMP_PROTOCOL and packet.payload.dstport == 80:
 			log.debug(packet)
-			log.debug('Blocked ICMP packet with destinationPort = 80!')
+			log.debug('Blocked packet with destinationPort = 80!')
 			event.halt = True
 		elif packet.protocol == pkt.ipv4.UDP_PROTOCOL and packet.payload.dstport == 5001:		
 			eth_packet = event.parsed
